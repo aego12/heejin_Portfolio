@@ -55,6 +55,47 @@ if (storyPreview) {
   })
 }
 
+const kodakPagePreview = document.querySelector('.personal-kodak-video')
+const kodakHeroLayer = document.querySelector('.personal-kodak-hero-layer')
+const kodakHeroPreview = kodakHeroLayer?.querySelector('video')
+if (kodakPagePreview && kodakHeroLayer && kodakHeroPreview) {
+  const pageWidth = 1920
+  const pageHeight = 15086
+  const heroTop = 852
+  const heroHeight = 1090
+  let kodakSyncFrame = 0
+
+  const syncKodakHeroVideo = () => {
+    if (!kodakPagePreview.duration || !kodakPagePreview.videoWidth || !kodakPagePreview.videoHeight) return
+    const scale = kodakPagePreview.clientWidth / pageWidth
+    const viewportHeight = kodakPagePreview.clientHeight
+    const viewportPageHeight = viewportHeight / scale
+    const pageScroll = kodakPagePreview.currentTime / kodakPagePreview.duration * (pageHeight - viewportPageHeight)
+    const top = kodakPagePreview.offsetTop + (heroTop - pageScroll) * scale
+    const height = heroHeight * scale
+    kodakHeroLayer.style.left = `${kodakPagePreview.offsetLeft}px`
+    kodakHeroLayer.style.top = `${top}px`
+    kodakHeroLayer.style.width = `${kodakPagePreview.clientWidth}px`
+    kodakHeroLayer.style.height = `${height}px`
+
+    const isVisible = top < viewportHeight && top + height > 0
+    kodakHeroLayer.style.visibility = isVisible ? 'visible' : 'hidden'
+    if (isVisible && kodakHeroPreview.paused) kodakHeroPreview.play().catch(() => {})
+    if (!isVisible && !kodakHeroPreview.paused) kodakHeroPreview.pause()
+    if (!kodakPagePreview.paused) kodakSyncFrame = requestAnimationFrame(syncKodakHeroVideo)
+  }
+
+  kodakPagePreview.addEventListener('seeked', syncKodakHeroVideo)
+  kodakPagePreview.addEventListener('loadedmetadata', syncKodakHeroVideo)
+  kodakPagePreview.addEventListener('play', () => {
+    cancelAnimationFrame(kodakSyncFrame)
+    syncKodakHeroVideo()
+  })
+  kodakPagePreview.addEventListener('pause', () => cancelAnimationFrame(kodakSyncFrame))
+  window.addEventListener('resize', syncKodakHeroVideo)
+  syncKodakHeroVideo()
+}
+
 const stories = [...document.querySelectorAll('.horizontal-story')].map((story) => {
   const track = story.querySelector('.story-track')
   const panels = [...(track?.querySelectorAll('.story-panel') ?? [])]

@@ -100,7 +100,7 @@ Figma 기준 4개 패널로 구성한다.
 | --- | --- | --- |
 | 01 표지 | 표지 | 전체 개인 작업의 범위, 제작 의도, 역할, 공통 기준 |
 | 02 KODAK Apparel | KODAK Apparel web renewal | 목업, 목적, 타깃, 주요 화면, 제작 범위, 링크 |
-| 03 JUVELOOK ONDA | JUVELOOK ONDA web renewal | 목업과 설명, 차별화된 디자인 포인트, 반응형/구현 범위 |
+| 03 JUVELOOK | JUVELOOK web renewal | 목업과 설명, 차별화된 디자인 포인트, 반응형/구현 범위 |
 | 04 HUGREEN | HUGREEN web renewal | 목업과 상세 콘텐츠, 결과, 회고 또는 후속 링크 |
 
 각 프로젝트는 독립 제목과 설명을 사용한다. 메인 페이지만 제작했다면 범위를 명시하고, 디자인 시안과 실제 구현 결과를 구분한다.

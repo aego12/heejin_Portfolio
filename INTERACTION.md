@@ -23,7 +23,7 @@ OBYS Grids의 공개 페이지 설정과 실제 렌더링에서 확인한 load·
 
 1. **04 Team Project — Nintendo 웹사이트 리뉴얼:** 7개(표지 → 리뉴얼 요소 → 편집 디자인 → 타이포그래피·인터랙션 → 개선 전후 → What I do → better TOGETHER)
 2. **05 UX Planning — 팀 프로젝트 기획 방법론:** 7개(표지 → 시장·브랜드 조사 → 사용자 인터뷰·분석 → 문제 정의·기획 → 팀 논의·구조 설계 → 디자인 방향 → 화면 설계와 구체화)
-3. **06 Personal Project — 웹사이트 리뉴얼 및 메인 페이지:** 4개(표지 → KODAK Apparel → JUVELOOK ONDA → HUGREEN)
+3. **06 Personal Project — 웹사이트 리뉴얼 및 메인 페이지:** 4개(표지 → KODAK Apparel → JUVELOOK → HUGREEN)
 4. **07 Video Content — 영상 콘텐츠:** 4개(표지 → 숏폼 01 → 숏폼 02 → 히어로 광고)
 
 각 하위 화면은 `STRUCTURE.md`의 독립 패널에 대응한다. Persona는 대응되는 화면의 가로 패널 구성과 캡처에서 확인된 배치·설명 방식만 참고한다. 세로 스크롤 연동 방식은 이 문서의 프로젝트 규칙이며 Persona 사이트의 실제 동작으로 단정하지 않는다. 01 Hero / Intro, 02 Strengths, 03 Profile, 08 Clone Coding, 10 Contact에는 가로 이동이나 Persona의 페이지 구성을 적용하지 않는다. 09 Skill은 그래픽 상단이 뷰포트 높이의 25% 위치에 도달한 시점부터 페이지 세로 스크롤에 연동해 잘린 그래픽을 부드럽게 옆으로 이동시키며, 그래픽 자체의 가로 스크롤 입력과 스크롤바는 제공하지 않는다. `COLUMNS / 01`은 Strengths와 Profile 사이의 일반 문서 흐름에 있는 정적 구분 헤더다. 공통 챗봇 UI 계획은 별도 요소이며 프로젝트 트랙의 진행에 영향을 주지 않는다.
