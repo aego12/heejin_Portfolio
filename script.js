@@ -293,6 +293,7 @@ stories.forEach(({ panels }) => {
 })
 
 const getMediaTravel = (rail) => {
+ if (rail.closest('.video-short-one')) return 0
  const content = rail.closest('.story-content')
  const topInset = content ? Number.parseFloat(getComputedStyle(content).paddingTop) || 0 : 0
  return Math.max(0, rail.scrollHeight + topInset - window.innerHeight)
@@ -391,18 +392,18 @@ const renderScroll = () => {
     })
     setStoryFill(panels, phase)
   })
-  const about = document.querySelector('.about-section')
-  const aboutTitle = document.querySelector('#about-title')
-  if (about && aboutTitle) {
-    const titleRect = aboutTitle.getBoundingClientRect()
+  const selfIntroduction = document.querySelector('.self-introduction-section')
+  const selfIntroductionTitle = document.querySelector('#self-introduction-title')
+  if (selfIntroduction && selfIntroductionTitle) {
+    const titleRect = selfIntroductionTitle.getBoundingClientRect()
     const fillStart = window.innerHeight * .8
     const fillEnd = window.innerHeight * .35
     const fillProgress = reduceMotion.matches
       ? 1
       : window.innerWidth >= 1200
-        ? clamp(-about.getBoundingClientRect().top / Math.max(1, about.offsetHeight - window.innerHeight))
+        ? clamp(-selfIntroduction.getBoundingClientRect().top / Math.max(1, selfIntroduction.offsetHeight - window.innerHeight))
         : clamp((fillStart - titleRect.top) / (fillStart - fillEnd))
-    setFillProgress(aboutTitle, fillProgress)
+    setFillProgress(selfIntroductionTitle, fillProgress)
   }
   if (skillScroll && skillPin && skillArtwork && skillFrame) {
     const travel = Number(skillScroll.dataset.travel ?? 0)
