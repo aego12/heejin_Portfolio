@@ -126,6 +126,71 @@ if (planningStages.length) {
  content.replaceChildren(copies, rail)
 }
 
+const personalDetails = [...document.querySelectorAll('#personal-project .personal-detail')]
+if (personalDetails.length) {
+ const combined = personalDetails[0]
+ combined.classList.add('planning-combined', 'personal-combined', 'project-media-scroll')
+ const content = combined.querySelector('.story-content')
+ const copies = document.createElement('div')
+ copies.className = 'project-fixed-copy planning-copies personal-copies'
+ const rail = document.createElement('div')
+ rail.className = 'project-media-rail planning-rail'
+ personalDetails.forEach((panel, index) => {
+  const copy = panel.querySelector('.personal-detail-copy')
+  copy.dataset.planningStep = String(index)
+  copy.hidden = index !== 0
+  copy.prepend(panel.querySelector('.personal-panel-label'))
+  copies.append(copy)
+  const group = document.createElement('div')
+  group.className = 'planning-image-group'
+  group.dataset.planningStep = String(index)
+  panel.querySelectorAll('.personal-detail-media img, .personal-detail-media video').forEach(asset => {
+   if (asset.closest('.personal-kodak-hero-layer')) return
+   const box = document.createElement('div')
+   box.className = 'project-media-box'
+   box.append(asset)
+   group.append(box)
+   asset.addEventListener(asset instanceof HTMLVideoElement ? 'loadedmetadata' : 'load', () => { updateStorySize(); requestRender() })
+  })
+  rail.append(group)
+  if (panel !== combined) panel.remove()
+ })
+ content.replaceChildren(copies, rail)
+}
+
+const videoDetails = [...document.querySelectorAll('#video-content .video-panel:not(.video-cover)')]
+if (videoDetails.length) {
+ const combined = videoDetails[0]
+ combined.classList.remove('video-short-one')
+ combined.classList.add('planning-combined', 'video-combined', 'project-media-scroll')
+ const content = combined.querySelector('.story-content')
+ const copies = document.createElement('div')
+ copies.className = 'project-fixed-copy planning-copies video-copies'
+ const rail = document.createElement('div')
+ rail.className = 'project-media-rail planning-rail'
+ videoDetails.forEach((panel, index) => {
+  const copy = panel.querySelector('.video-detail-copy')
+  copy.dataset.planningStep = String(index)
+  copy.hidden = index !== 0
+  copy.prepend(panel.querySelector('.video-panel-label'))
+  copies.append(copy)
+  const group = document.createElement('div')
+  group.className = 'planning-image-group'
+  group.dataset.planningStep = String(index)
+  panel.querySelectorAll('.video-media video').forEach(asset => {
+   const box = document.createElement('div')
+   box.className = 'project-media-box'
+   if (asset.matches('.video-short-preview')) box.classList.add('video-combined-short')
+   box.append(asset)
+   group.append(box)
+   asset.addEventListener('loadedmetadata', () => { updateStorySize(); requestRender() })
+  })
+  rail.append(group)
+  if (panel !== combined) panel.remove()
+ })
+ content.replaceChildren(copies, rail)
+}
+
 const stories = [...document.querySelectorAll('.horizontal-story')].map((story) => {
   const track = story.querySelector('.story-track')
   const panels = [...(track?.querySelectorAll('.story-panel') ?? [])]
@@ -182,7 +247,7 @@ fillElements.forEach((element) => {
 
 const setStoryFill = (panels, phase) => {
   panels.forEach((panel, index) => {
-    if (panel.matches('.planning-combined')) {
+    if (panel.matches('.planning-combined:not(.personal-combined):not(.video-combined)')) {
       let imageNumber = 1
       panel.querySelectorAll('.project-media-box').forEach((box, imageIndex) => {
         if (box.getBoundingClientRect().top <= window.innerHeight * .4) imageNumber = imageIndex + 1
@@ -195,7 +260,7 @@ const setStoryFill = (panels, phase) => {
       const rail = panel.querySelector('.planning-rail')
       const groups = [...rail.querySelectorAll('.planning-image-group')]
       const position = -(Number.parseFloat(rail.style.getPropertyValue('--media-y')) || 0) + window.innerHeight * .3
-      const copies = [...panel.querySelectorAll('.ux-stage-copy')]
+      const copies = [...panel.querySelectorAll('.planning-copies > [data-planning-step]')]
       copies.forEach((copy, step) => {
         const start = step === 0 ? window.innerHeight * .3 : groups[step].offsetTop
         const end = groups[step + 1]?.offsetTop ?? rail.scrollHeight
@@ -349,7 +414,7 @@ const renderScroll = () => {
           panel.querySelectorAll('.planning-image-group').forEach((group, index) => {
             if (group.getBoundingClientRect().top <= window.innerHeight * .4) active = index
           })
-          panel.querySelectorAll('.ux-stage-copy').forEach((copy, index) => { copy.hidden = index !== active })
+          panel.querySelectorAll('.planning-copies > [data-planning-step]').forEach((copy, index) => { copy.hidden = index !== active })
         }
       })
       setStoryFill(panels, phaseCount)
@@ -385,7 +450,7 @@ const renderScroll = () => {
         const position = travel * mediaProgress + window.innerHeight * .3
         let active = 0
         groups.forEach((group, index) => { if (group.offsetTop <= position) active = index })
-        panel.querySelectorAll('.ux-stage-copy').forEach((copy, index) => { copy.hidden = index !== active })
+        panel.querySelectorAll('.planning-copies > [data-planning-step]').forEach((copy, index) => { copy.hidden = index !== active })
        }
       }
       panel.inert = index !== Math.min(panels.length - 1, Math.floor((phase + 1) / 2))
@@ -509,6 +574,10 @@ if (capabilitiesSection && capabilitiesInner && capabilitiesCards.length) {
    capabilitiesCards.forEach(card => {
     card.style.transform = ''
     card.style.opacity = ''
+    card.style.height = ''
+    card.querySelectorAll(':scope > :not(.capability-object)').forEach(text => { text.style.opacity = '' })
+    card.querySelector('.capability-object').style.position = ''
+    card.querySelector('.capability-object').style.top = ''
     card.querySelector('.capability-object').style.transform = ''
    })
    if (heading) heading.style.opacity = ''
@@ -516,20 +585,37 @@ if (capabilitiesSection && capabilitiesInner && capabilitiesCards.length) {
   }
   const rect = capabilitiesSection.getBoundingClientRect()
   const p = clamp(-rect.top / Math.max(1, capabilitiesSection.offsetHeight - innerHeight))
+  const collapse = clamp(p / .12)
   const merge = clamp((p - .15) / .35)
-  const spin = clamp((p - .35) / .3)
   const reveal = clamp((p - .65) / .35)
   const list = capabilitiesInner.querySelector('.capability-list')
   const listRect = list.getBoundingClientRect()
   capabilitiesCards.forEach((card, index) => {
    // Read the original layout position so transforms never feed back into the movement.
    card.style.transform = 'none'
+   card.style.height = ''
+   const object = card.querySelector('.capability-object')
+   object.style.position = ''
+   object.style.top = ''
+   // Measure the original square so rotation cannot shift its vertical anchor.
+   object.style.transform = 'none'
    const cardRect = card.getBoundingClientRect()
+   const objectRect = object.getBoundingClientRect()
+   const border = Number.parseFloat(getComputedStyle(card).borderTopWidth) || 0
+   const objectTop = objectRect.top - cardRect.top - border
+   const compactHeight = objectTop * 2 + objectRect.height + border * 2
+   object.style.position = 'absolute'
+   object.style.top = objectTop + 'px'
+   card.style.height = (cardRect.height + (compactHeight - cardRect.height) * collapse) + 'px'
+   card.querySelectorAll(':scope > :not(.capability-object)').forEach(text => {
+    text.style.opacity = String(1 - clamp(collapse / .6))
+   })
    const shift = listRect.left + listRect.width / 2 - cardRect.left - cardRect.width / 2
    card.style.transform = 'translateX(' + (shift * merge) + 'px)'
    card.style.zIndex = String(capabilitiesCards.length - index)
    card.style.opacity = String(1 - reveal)
-   card.querySelector('.capability-object').style.transform = 'rotate(' + (spin * (index + 1) * 90) + 'deg)'
+   const spin = clamp((p - .35 - index * .036) / .3)
+   object.style.transform = 'rotate(' + (spin * 90) + 'deg)'
   })
   if (heading) heading.style.opacity = String(1 - reveal)
   const wipeRect = wipe.getBoundingClientRect()

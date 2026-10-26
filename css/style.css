@@ -745,7 +745,8 @@ body.show-grid .column-overlay { opacity: 1; }
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
  .capabilities-section.has-scroll-transition { position: relative; height: 320svh; }
  .has-scroll-transition .capabilities { position: sticky; top: 0; height: 100svh; padding-block: clamp(4.5rem, 9svh, 7rem); align-content: center; isolation: isolate; }
- .has-scroll-transition .capability-list article { position: relative; height: min(52svh, 32rem); will-change: transform; }
+ .has-scroll-transition .capability-list { height: min(52svh, 32rem); align-items: start; }
+ .has-scroll-transition .capability-list article { position: relative; height: min(52svh, 32rem); overflow: hidden; will-change: transform; }
  .has-scroll-transition .capability-object { position: relative; z-index: 1; will-change: transform; }
  .capabilities-wipe { position: absolute; z-index: 5; inset: 0 calc(-1 * var(--page-padding)); background: var(--bg); clip-path: inset(50%); pointer-events: none; }
 }
@@ -921,6 +922,17 @@ body.show-grid .column-overlay { opacity: 1; }
 .planning-copies .ux-stage-copy[hidden] { display: none; }
 .planning-copies .ux-stage-copy:not([hidden]) { display: flex; flex-direction: column; }
 .planning-copies .ux-stage-copy h2 { margin-top: 16px; }
+.personal-copies .personal-detail-copy { color: var(--panel-text); }
+.personal-copies .personal-detail-copy[hidden] { display: none; }
+.personal-copies .personal-panel-label { position: static; margin: 0 0 1.5rem; }
+.personal-combined .personal-overview p { color: inherit; }
+.video-copies .video-detail-copy[hidden] { display: none; }
+.video-copies .video-detail-copy { color: var(--panel-text); }
+.video-copies .video-panel-label { position: static; }
+.video-combined .project-media-box.video-combined-short > video {
+ max-height: calc(100svh - 12rem);
+ object-fit: contain;
+}
 
 @media (max-width: 1199px) {
  .planning-combined .planning-copies { position: sticky; top: 4.5rem; z-index: 3; background: #000; padding-block: 1rem; }
@@ -952,6 +964,17 @@ body.show-grid .column-overlay { opacity: 1; }
 #ux-planning .ux-tags span { border-color: #767676; color: #000; }
 #ux-planning .planning-copies { background: #ebebeb; }
 #ux-planning .planning-combined .project-media-box { background: #000; }
+
+/* Personal details share the light palette used by UX planning. */
+#personal-project .story-track > .personal-combined {
+ background: var(--bg);
+ color: var(--primary);
+ --panel-text: var(--primary);
+ --fill-active: var(--primary);
+ --fill-muted: rgb(0 0 0 / 28%);
+}
+#personal-project .personal-combined .planning-copies { background: var(--bg); }
+#personal-project .personal-combined .project-media-box { background: var(--primary); }
 
 .team-project-divider { background: #000; color: #fff; }
 .team-project-divider .section-divider-inner { border-color: #fff; }
