@@ -546,3 +546,92 @@ if (capabilitiesSection && capabilitiesInner && capabilitiesCards.length) {
  capabilitiesMedia.addEventListener('change', queueCapabilities)
  renderCapabilities()
 }
+
+const aboutGrid = document.querySelector('.about-grid-section')
+const aboutGridStage = aboutGrid?.querySelector('.about-grid-stage')
+const aboutGridCurtain = aboutGrid?.querySelector('.about-grid-curtain')
+const aboutGridFlow = aboutGrid?.querySelector('.about-grid-flow')
+if (aboutGrid && aboutGridStage && aboutGridCurtain && aboutGridFlow) {
+ const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+ let scheduled = false
+ const drawAboutGrid = () => {
+  scheduled = false
+  if (motion.matches) {
+   aboutGridFlow.style.transform = ''
+   return
+  }
+  const progress = Math.max(0, Math.min(1, -aboutGrid.getBoundingClientRect().top / (aboutGrid.offsetHeight - innerHeight)))
+  const opening = Math.min(1, progress / .24)
+  const ease = opening * opening * (3 - 2 * opening)
+  aboutGridCurtain.style.transform = `rotate(${ease * 145}deg) scale(${1 - ease})`
+  aboutGridCurtain.style.visibility = opening === 1 ? 'hidden' : 'visible'
+  const travel = Math.max(0, Math.min(1, (progress - .20) / .80))
+  aboutGridFlow.style.transform = `translateY(${-travel * (innerHeight + aboutGridFlow.offsetHeight)}px)`
+  aboutGridFlow.querySelectorAll('.about-grid-blocks i').forEach((block, index) => {
+   const column = index % 4
+   const row = Math.floor(index / 4)
+   const entrance = Math.max(0, 1 - Math.max(0, (travel - row * .14) * 7))
+   block.style.setProperty('--block-offset', `${entrance * [0, -140, 40, -70][column]}px`)
+  })
+ }
+ const queueAboutGrid = () => { if (!scheduled) { scheduled = true; requestAnimationFrame(drawAboutGrid) } }
+ addEventListener('scroll', queueAboutGrid, { passive: true })
+ addEventListener('resize', queueAboutGrid)
+ motion.addEventListener('change', queueAboutGrid)
+ drawAboutGrid()
+}
+
+const cloneCanvas = document.querySelector('.clone-canvas')
+if (cloneCanvas) {
+ const cloneMotion = matchMedia('(prefers-reduced-motion: reduce)')
+ const finePointer = matchMedia('(pointer: fine)')
+ const layers = [...cloneCanvas.querySelectorAll('.clone-art, .clone-word, .clone-orb')]
+ const layerPositions = new Map()
+ const pointer = document.createElement('div')
+ pointer.className = 'clone-pointer'
+ pointer.setAttribute('aria-hidden', 'true')
+ document.body.append(pointer)
+ let pending = false
+ const renderClone = () => {
+  pending = false
+  const bounds = cloneCanvas.getBoundingClientRect()
+  if (cloneMotion.matches) {
+   layers.forEach(layer => layer.style.removeProperty('--clone-drift'))
+   layerPositions.clear()
+   return
+  }
+  if (bounds.bottom < 0 || bounds.top > innerHeight) return
+  let settling = false
+  layers.forEach(layer => {
+   const rect = layer.getBoundingClientRect()
+   const isArt = layer.classList.contains('clone-art')
+   const isOrb = layer.classList.contains('clone-orb')
+   const current = layerPositions.get(layer) || 0
+   const baseCenter = rect.top - current + rect.height / 2
+   // Each layer crosses its resting position at a different viewport height.
+   const anchor = isArt ? .56 : isOrb ? .38 : .68
+   const speed = isArt ? .035 : isOrb ? .025 : -.018
+   const limit = isArt ? 16 : isOrb ? 12 : 8
+   const target = Math.max(-limit, Math.min(limit, (innerHeight * anchor - baseCenter) * speed))
+   const follow = isArt ? .16 : isOrb ? .035 : .2
+   const next = Math.abs(target - current) < .1 ? target : current + (target - current) * follow
+   if (Math.abs(target - next) > .1) settling = true
+   layerPositions.set(layer, next)
+   layer.style.setProperty('--clone-drift', `${next}px`)
+  })
+  if (settling) queueClone()
+ }
+ const queueClone = () => { if (!pending) { pending = true; requestAnimationFrame(renderClone) } }
+ addEventListener('scroll', queueClone, {passive: true})
+ addEventListener('resize', queueClone)
+ cloneMotion.addEventListener('change', queueClone)
+ document.addEventListener('pointermove', event => {
+  if (!finePointer.matches || cloneMotion.matches) return
+  pointer.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`
+  pointer.style.opacity = '1'
+  pointer.classList.toggle('is-over-link', Boolean(event.target.closest('a, button, input, select, textarea, summary, [role="button"], [role="link"]')))
+ })
+ document.documentElement.addEventListener('pointerleave', () => { pointer.style.opacity = '0' })
+ window.addEventListener('blur', () => { pointer.style.opacity = '0' })
+ queueClone()
+}
