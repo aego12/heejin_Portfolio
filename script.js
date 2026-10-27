@@ -337,7 +337,8 @@ stories.forEach(({ panels }) => {
     assets.forEach(asset => {
      const box = document.createElement('div')
      box.className = 'project-media-box'
-     box.append(asset)
+     const annotatedFigure = asset.closest('.story-role-navigation')
+     box.append(annotatedFigure ?? asset)
      rail.append(box)
      asset.addEventListener(asset instanceof HTMLVideoElement ? 'loadedmetadata' : 'load', () => { updateStorySize(); requestRender() })
     })
@@ -652,7 +653,7 @@ if (aboutGrid && aboutGridStage && aboutGridCurtain && aboutGridFlow) {
   aboutGridCurtain.style.transform = `rotate(${ease * 145}deg) scale(${1 - ease})`
   aboutGridCurtain.style.visibility = opening === 1 ? 'hidden' : 'visible'
   const travel = Math.max(0, Math.min(1, (progress - .20) / .80))
-  aboutGridFlow.style.transform = `translateY(${-travel * (innerHeight + aboutGridFlow.offsetHeight)}px)`
+  aboutGridFlow.style.transform = `translateY(${-travel * aboutGridFlow.offsetHeight}px)`
   aboutGridFlow.querySelectorAll('.about-grid-blocks i').forEach((block, index) => {
    const column = index % 4
    const row = Math.floor(index / 4)
