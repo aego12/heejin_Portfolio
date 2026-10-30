@@ -1,0 +1,268 @@
+{
+  "createdNodeIds": [
+    "5:7",
+    "5:45",
+    "5:46",
+    "5:47",
+    "5:48",
+    "5:49",
+    "5:50",
+    "5:51",
+    "5:52",
+    "5:53",
+    "5:54",
+    "5:55",
+    "5:56",
+    "5:57",
+    "5:58",
+    "5:59",
+    "5:60",
+    "5:61",
+    "5:62",
+    "5:63",
+    "5:64",
+    "5:65",
+    "5:66",
+    "5:67",
+    "5:68",
+    "5:69",
+    "5:70",
+    "5:71",
+    "5:72",
+    "5:73",
+    "5:74",
+    "5:75",
+    "5:76",
+    "5:77",
+    "5:78",
+    "5:79",
+    "5:80",
+    "5:81",
+    "5:82",
+    "5:83",
+    "5:84",
+    "5:85",
+    "5:86",
+    "5:87",
+    "5:88",
+    "5:89",
+    "5:90",
+    "5:92",
+    "5:93",
+    "5:94",
+    "5:95",
+    "5:97",
+    "5:98",
+    "5:99",
+    "5:100",
+    "5:102",
+    "5:103",
+    "5:104",
+    "5:105",
+    "5:106",
+    "5:107",
+    "5:108",
+    "5:109",
+    "5:110",
+    "5:111",
+    "5:112",
+    "5:113",
+    "5:114",
+    "5:115",
+    "5:116",
+    "5:117",
+    "5:118",
+    "5:119",
+    "5:120",
+    "5:121",
+    "5:122",
+    "5:123",
+    "5:124",
+    "5:125",
+    "5:126",
+    "5:127",
+    "5:128",
+    "5:129",
+    "5:130",
+    "5:131",
+    "5:132",
+    "5:133",
+    "5:134",
+    "5:135",
+    "5:136",
+    "5:137",
+    "5:138",
+    "5:139",
+    "5:140",
+    "5:141",
+    "5:142",
+    "5:143",
+    "5:144",
+    "5:145",
+    "5:146",
+    "I5:146;5:46",
+    "5:148",
+    "I5:148;5:52",
+    "5:150",
+    "I5:150;5:71",
+    "I5:150;5:72",
+    "I5:150;5:73",
+    "5:154",
+    "I5:154;5:88",
+    "I5:154;5:89",
+    "I5:154;5:90",
+    "I5:154;5:90;5:81",
+    "5:159",
+    "I5:159;5:78",
+    "5:161",
+    "I5:161;5:81",
+    "5:163",
+    "I5:163;5:104",
+    "I5:163;5:105",
+    "I5:163;5:106",
+    "I5:163;5:107",
+    "5:168",
+    "5:169",
+    "5:170",
+    "5:171",
+    "5:172"
+  ],
+  "pages": {
+    "03 · 와이어프레임": "5:170",
+    "05 · 앱 디자인 & 프로토타입": "5:171",
+    "00 · 프로젝트 안내": "5:172"
+  },
+  "designSystemPageId": "5:7",
+  "specimenId": "5:124",
+  "collections": [
+    "VariableCollectionId:5:8",
+    "VariableCollectionId:5:9",
+    "VariableCollectionId:5:10"
+  ],
+  "variables": {
+    "color/background": "VariableID:5:22",
+    "color/surface": "VariableID:5:23",
+    "color/primary": "VariableID:5:24",
+    "color/accent": "VariableID:5:25",
+    "color/text": "VariableID:5:26",
+    "color/muted": "VariableID:5:27",
+    "color/ink": "VariableID:5:28",
+    "color/border": "VariableID:5:29",
+    "color/error": "VariableID:5:30",
+    "color/success": "VariableID:5:31",
+    "color/disabled": "VariableID:5:32",
+    "space/8": "VariableID:5:33",
+    "space/12": "VariableID:5:34",
+    "space/16": "VariableID:5:35",
+    "space/24": "VariableID:5:36",
+    "radius/12": "VariableID:5:37",
+    "radius/20": "VariableID:5:38",
+    "radius/28": "VariableID:5:39"
+  },
+  "components": {
+    "Button/Primary/Default": {
+      "id": "5:45",
+      "labelProperty": "Label#5:0"
+    },
+    "Button/Primary/Pressed": {
+      "id": "5:47",
+      "labelProperty": "Label#5:1"
+    },
+    "Button/Primary/Disabled": {
+      "id": "5:49",
+      "labelProperty": "Label#5:2"
+    },
+    "Button/Secondary/Default": {
+      "id": "5:51",
+      "labelProperty": "Label#5:3"
+    },
+    "Button/Secondary/Pressed": {
+      "id": "5:53",
+      "labelProperty": "Label#5:4"
+    },
+    "Button/Secondary/Disabled": {
+      "id": "5:55",
+      "labelProperty": "Label#5:5"
+    },
+    "Input/Empty": {
+      "id": "5:58",
+      "labelProperty": "Label#5:7",
+      "valueProperty": "Value#5:8"
+    },
+    "Input/Filled": {
+      "id": "5:62",
+      "labelProperty": "Label#5:9",
+      "valueProperty": "Value#5:10"
+    },
+    "Input/Focused": {
+      "id": "5:66",
+      "labelProperty": "Label#5:11",
+      "valueProperty": "Value#5:12"
+    },
+    "Input/Error": {
+      "id": "5:70",
+      "labelProperty": "Label#5:13",
+      "valueProperty": "Value#5:14"
+    },
+    "Chip/false": {
+      "id": "5:75",
+      "labelProperty": "Label#5:17"
+    },
+    "Chip/true": {
+      "id": "5:77",
+      "labelProperty": "Label#5:18"
+    },
+    "Switch/On": {
+      "id": "5:80"
+    },
+    "Switch/Off": {
+      "id": "5:82"
+    },
+    "Switch/Disabled": {
+      "id": "5:84"
+    },
+    "DeviceCard/On": {
+      "id": "5:87",
+      "labelProperty": "Label#5:20",
+      "statusProperty": "Status#5:21"
+    },
+    "DeviceCard/Off": {
+      "id": "5:92",
+      "labelProperty": "Label#5:22",
+      "statusProperty": "Status#5:23"
+    },
+    "DeviceCard/Offline": {
+      "id": "5:97",
+      "labelProperty": "Label#5:24",
+      "statusProperty": "Status#5:25"
+    },
+    "Navigation/홈": {
+      "id": "5:103"
+    },
+    "Navigation/공간": {
+      "id": "5:108"
+    },
+    "Navigation/예약": {
+      "id": "5:113"
+    },
+    "Navigation/설정": {
+      "id": "5:118"
+    }
+  },
+  "sets": {
+    "Button": "5:57",
+    "Input": "5:74",
+    "Chip": "5:79",
+    "Switch": "5:86",
+    "DeviceCard": "5:102",
+    "Navigation": "5:123"
+  },
+  "styles": {
+    "Title": "S:c3dbfaaa3b3ead266a8949ac245e86ece846ed1f,",
+    "Body": "S:d401c4ff04487fa6543dbd7f78f80af92f2d4fb7,",
+    "Label": "S:460515538c734a8d6bf7a7a62239db6259d420fe,",
+    "Caption": "S:ed03796f0b65c011c3d129184c1925da806871df,",
+    "Display": "S:ed9b7b4e939fffabefc5649e32449975474bb5df,"
+  },
+  "variantCount": 22
+}

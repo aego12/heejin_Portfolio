@@ -485,13 +485,13 @@ body.show-grid .column-overlay { opacity: 1; }
 .skill-text-top, .skill-text-bottom { position: absolute; }
 .skill-text-top { top: 18.29px; left: 17.61px; }
 .skill-text-bottom { bottom: 34.81px; left: 18.47px; transform: translateY(100%); }
-.clone-section-inner { padding-block: var(--space-16); }
+.clone-section-inner { padding-top: var(--space-8); padding-bottom: var(--space-16); }
 .clone-intro { margin: var(--space-6) 0 0; color: var(--primary); font-size: clamp(.9rem, 1.25vw, 1.25rem); line-height: 1.8; text-align: right; word-break: keep-all; }
 .clone-canvas { position: relative; width: 100%; overflow: hidden; aspect-ratio: 1836 / 2720; container-type: inline-size; background: var(--bg); }
 .clone-word { position: absolute; z-index: 1; color: var(--paper); font-size: 21.786492cqw; font-weight: 300; line-height: normal; white-space: nowrap; }
 .clone-word-run { top: 8.014706%; left: 7.244009%; }
 .clone-word-way { top: 22.022059%; left: 8.496732%; }
-.clone-word-live { top: 34.742647%; left: 57.244009%; }
+.clone-word-live { top: 34.742647%; left: 57.244009%; font-size: 16cqw; }
 .clone-word-evie { top: 48.529412%; left: 57.244009%; }
 .clone-word-kyung { top: 64.117647%; left: 5.392157%; }
 .clone-word-dong { top: 76.617647%; left: 5.392157%; }
@@ -507,8 +507,8 @@ body.show-grid .column-overlay { opacity: 1; }
 .clone-art img { display: block; max-width: 100%; max-height: 100%; object-fit: cover; }
 .clone-art-runner { top: 10.110294%; left: .653595%; width: 60.05305%; height: 30.86386%; }
 .clone-art-runner img { width: 90.246358%; height: 79.004094%; opacity: .7; transform: rotate(-169.09deg) scaleY(-1); }
-.clone-art-product { top: 27.904412%; left: 53.867647%; width: 47.763943%; height: 39.012132%; }
-.clone-art-product img { width: 69.207112%; height: 85.791939%; opacity: .7; transform: rotate(-19.58deg); }
+.clone-art-light-up { top: 32%; left: 32%; width: 60%; height: 32%; }
+.clone-art-light-up img { width: 100%; height: auto; }
 .clone-art-monogram { z-index: 5; top: 67.169118%; left: 8.442266%; width: 36.601307%; height: 22.867647%; }
 .clone-art-monogram img { width: 100%; height: 100%; opacity: .7; }
 .clone-line { position: absolute; z-index: 6; display: block; }

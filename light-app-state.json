@@ -1,0 +1,11 @@
+{
+  "runId": "light-app-v2",
+  "fileKey": "kIbEI0tqwTMeqot5cqOBYG",
+  "sessionId": "a1727e5a-403d-4b18-a09e-e83229d09239",
+  "scope": "App planning, wireframes, editable screens, design system and Figma navigation prototype",
+  "existingPages": {"preview": "0:1", "planning": "3:223"},
+  "existingBoards": {"preview": "3:2", "planning": "3:224"},
+  "gapAnalysis": "Existing Manrope/Noto Sans KR, warm amber visual concept. No local variables or component library. Community kit forms do not match warm glass token model; build owned components. Reuse existing illustration assets and the existing switch where applicable. No application code source or Code Connect mappings exist for this concept.",
+  "completedSteps": ["discovery"],
+  "pendingValidations": ["design system", "screens", "wireframes", "prototype links"]
+}

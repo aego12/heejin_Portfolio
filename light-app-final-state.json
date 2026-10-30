@@ -1,0 +1,262 @@
+{
+  "fileKey": "kIbEI0tqwTMeqot5cqOBYG",
+  "sessionId": "a1727e5a-403d-4b18-a09e-e83229d09239",
+  "pages": {
+    "cover": "5:172",
+    "planning": "3:223",
+    "originalPreview": "0:1",
+    "wireframe": "5:170",
+    "designSystem": "5:7",
+    "prototype": "5:171"
+  },
+  "planningSpec": "9:7",
+  "preview": "10:7",
+  "wireframePreview": "10:167",
+  "screenIds": {
+    "welcome": "7:803",
+    "onboardingLight": "7:823",
+    "onboardingClimate": "7:849",
+    "login": "7:866",
+    "signup": "7:890",
+    "reset": "7:917",
+    "resetSent": "7:933",
+    "loginError": "7:948",
+    "permissions": "7:970",
+    "emptyHome": "7:993",
+    "addDevice": "7:1015",
+    "wifi": "7:1035",
+    "connected": "7:1057",
+    "home": "7:1080",
+    "rooms": "7:1117",
+    "light": "7:1158",
+    "lightOff": "7:1188",
+    "lightWarm": "7:1209",
+    "climate": "7:1238",
+    "climate25": "7:1259",
+    "routines": "7:1276",
+    "editRoutine": "7:1311",
+    "saved": "7:1342",
+    "settings": "7:1357",
+    "notifications": "7:1395",
+    "offline": "7:1422",
+    "scanFailed": "7:1439",
+    "account": "7:1454",
+    "terms": "7:1478",
+    "privacy": "7:1493",
+    "climate23": "8:197"
+  },
+  "wireframeIds": {
+    "welcome": "8:232",
+    "onboardingLight": "8:257",
+    "onboardingClimate": "8:292",
+    "login": "8:311",
+    "signup": "8:347",
+    "reset": "8:388",
+    "resetSent": "8:410",
+    "loginError": "8:427",
+    "permissions": "8:461",
+    "emptyHome": "8:500",
+    "addDevice": "8:525",
+    "wifi": "8:554",
+    "connected": "8:586",
+    "home": "8:621",
+    "rooms": "8:683",
+    "light": "8:758",
+    "lightOff": "8:797",
+    "lightWarm": "8:821",
+    "climate": "8:859",
+    "climate25": "8:891",
+    "routines": "8:912",
+    "editRoutine": "8:975",
+    "saved": "8:1029",
+    "settings": "8:1046",
+    "notifications": "8:1096",
+    "offline": "8:1146",
+    "scanFailed": "8:1167",
+    "account": "8:1184",
+    "terms": "8:1222",
+    "privacy": "8:1239",
+    "climate23": "8:1256"
+  },
+  "components": {
+    "Button/Primary/Default": {
+      "id": "5:45",
+      "labelProperty": "Label#5:6"
+    },
+    "Button/Primary/Pressed": {
+      "id": "5:47",
+      "labelProperty": "Label#5:6"
+    },
+    "Button/Primary/Disabled": {
+      "id": "5:49",
+      "labelProperty": "Label#5:6"
+    },
+    "Button/Secondary/Default": {
+      "id": "5:51",
+      "labelProperty": "Label#5:6"
+    },
+    "Button/Secondary/Pressed": {
+      "id": "5:53",
+      "labelProperty": "Label#5:6"
+    },
+    "Button/Secondary/Disabled": {
+      "id": "5:55",
+      "labelProperty": "Label#5:6"
+    },
+    "Input/Empty": {
+      "id": "5:58",
+      "labelProperty": "Label#5:15",
+      "valueProperty": "Value#5:16"
+    },
+    "Input/Filled": {
+      "id": "5:62",
+      "labelProperty": "Label#5:15",
+      "valueProperty": "Value#5:16"
+    },
+    "Input/Focused": {
+      "id": "5:66",
+      "labelProperty": "Label#5:15",
+      "valueProperty": "Value#5:16"
+    },
+    "Input/Error": {
+      "id": "5:70",
+      "labelProperty": "Label#5:15",
+      "valueProperty": "Value#5:16"
+    },
+    "Chip/false": {
+      "id": "5:75",
+      "labelProperty": "Label#5:19"
+    },
+    "Chip/true": {
+      "id": "5:77",
+      "labelProperty": "Label#5:19"
+    },
+    "Switch/On": {
+      "id": "5:80"
+    },
+    "Switch/Off": {
+      "id": "5:82"
+    },
+    "Switch/Disabled": {
+      "id": "5:84"
+    },
+    "DeviceCard/On": {
+      "id": "5:87",
+      "labelProperty": "Label#5:26",
+      "statusProperty": "Status#5:27"
+    },
+    "DeviceCard/Off": {
+      "id": "5:92",
+      "labelProperty": "Label#5:26",
+      "statusProperty": "Status#5:27"
+    },
+    "DeviceCard/Offline": {
+      "id": "5:97",
+      "labelProperty": "Label#5:26",
+      "statusProperty": "Status#5:27"
+    },
+    "Navigation/홈": {
+      "id": "5:103"
+    },
+    "Navigation/공간": {
+      "id": "5:108"
+    },
+    "Navigation/예약": {
+      "id": "5:113"
+    },
+    "Navigation/설정": {
+      "id": "5:118"
+    }
+  },
+  "styles": {
+    "Title": "S:c3dbfaaa3b3ead266a8949ac245e86ece846ed1f,",
+    "Body": "S:d401c4ff04487fa6543dbd7f78f80af92f2d4fb7,",
+    "Label": "S:460515538c734a8d6bf7a7a62239db6259d420fe,",
+    "Caption": "S:ed03796f0b65c011c3d129184c1925da806871df,",
+    "Display": "S:ed9b7b4e939fffabefc5649e32449975474bb5df,"
+  },
+  "designSystemValidation": {
+    "variables": 35,
+    "semanticAliasCount": 14,
+    "missingScopes": [],
+    "missingSyntax": [],
+    "componentFamilies": 6,
+    "variants": 22,
+    "button": {
+      "boundVariables": {
+        "paddingLeft": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:35"
+        },
+        "paddingRight": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:35"
+        },
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "fills": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:5:24"
+          }
+        ]
+      },
+      "textStyle": "S:460515538c734a8d6bf7a7a62239db6259d420fe,"
+    },
+    "input": {
+      "boundVariables": {
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:5:37"
+        }
+      }
+    }
+  },
+  "validation": {
+    "screenCount": 31,
+    "wireframeCount": 31,
+    "navigationLinks": 114,
+    "reachableScreens": 31,
+    "invalidDestinations": 0,
+    "textOutOfBounds": 0,
+    "textOverlaps": 0,
+    "startingPoint": "7:803",
+    "homeStartingPoint": "7:1080"
+  },
+  "completedSteps": [
+    "planning",
+    "wireframes",
+    "design system",
+    "UI design",
+    "prototype",
+    "visual review",
+    "link validation"
+  ],
+  "limitations": "Figma sample-state prototype; no real authentication, email, device connection or persistence."
+}
