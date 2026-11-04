@@ -1078,9 +1078,16 @@ body.show-grid .column-overlay { opacity: 1; }
 .about-grid-heading h2, .about-grid-heading span { margin: 0; font-size: var(--type-section-title); line-height: .92; font-weight: 400; letter-spacing: -.06em; }
 .about-grid-curtain { position: absolute; z-index: 3; top: 50%; left: 50%; width: 150vmax; height: 150vmax; margin-top: -75vmax; margin-left: -75vmax; background: var(--bg); transform-origin: center; pointer-events: none; }
 .about-grid-flow { position: absolute; top: 100%; left: var(--page-padding); right: var(--page-padding); padding-bottom: var(--section-divider-space); will-change: transform; }
-.about-grid-row { position: relative; }
+.about-grid-row { position: relative; padding-bottom: clamp(2rem, 5vw, 5rem); }
 .about-grid-blocks { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1vw; }
 .about-grid-blocks i { display: block; aspect-ratio: 1; background: #eee; transform: translateY(var(--block-offset,0px)); }
+.about-grid-blocks i { overflow: hidden; }
+.about-grid-blocks img, .about-grid-blocks video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.about-grid-blocks .about-cafe-poster { object-fit: contain; object-position: center; padding: 8%; box-sizing: border-box; }
+.about-grid-blocks .about-painting { position: relative; }
+.about-grid-blocks .about-painting img { position: absolute; top: 50%; height: auto; transform: translateY(-40%); }
+.about-grid-row h3 { margin: 1.25rem 0 .75rem; font-size: clamp(1.5rem, 3.5vw, 4rem); font-weight: 400; line-height: 1.25; letter-spacing: -.045em; word-break: keep-all; }
+.about-grid-row p { max-width: 52rem; color: #ccc; line-height: 1.8; word-break: keep-all; }
 .about-grid-row:nth-child(2) i { background: #b0b0b0; }
 .about-grid-row:nth-child(3) i { background: #595959; }
 .about-grid-row:nth-child(4) i { background: #292929; }
@@ -1096,6 +1103,35 @@ body.show-grid .column-overlay { opacity: 1; }
  .about-grid-curtain { display: none; }
  .about-grid-flow { position: relative; top: auto; margin-inline: var(--page-padding); left: auto; right: auto; }
  .about-grid-heading { margin-bottom: var(--space-16); }
+}
+
+/* ABOUT: native vertical scrolling drives a continuous horizontal image rail. */
+.has-horizontal-about { --fill-active: #eee; --fill-muted: rgba(238,238,238,.3); }
+.has-horizontal-about .about-grid-flow { top: 0; padding: 0; }
+.has-horizontal-about .about-grid-heading { padding-top: 7.5rem; margin-bottom: clamp(1rem,3svh,2rem); }
+.has-horizontal-about .about-grid-heading h2,
+.has-horizontal-about .about-grid-heading span { font-size: clamp(1.5rem,3vw,3rem); }
+.has-horizontal-about .about-grid-row,
+.has-horizontal-about .about-grid-credit { display: none; }
+.about-image-rail { position: relative; display: flex; gap: 1vw; width: max-content; will-change: transform; }
+.about-image-rail .about-grid-blocks { display: flex; flex: none; gap: 1vw; }
+.about-image-rail i { flex: none; width: min(calc((100vw - var(--page-padding) * 2 - 3vw) / 4),44svh); transform: none; }
+.about-scroll-copies { display: grid; margin-top: 1.25rem; }
+.about-scroll-copy { grid-area: 1 / 1; visibility: hidden; pointer-events: none; }
+.about-scroll-copy.is-active { visibility: visible; pointer-events: auto; }
+.about-scroll-copy h3 { margin: 0 0 .75rem; font-size: clamp(1.5rem,3.5vw,4rem); font-weight: 400; line-height: 1.25; letter-spacing: -.045em; word-break: keep-all; }
+.about-scroll-copy p { max-width: 52rem; margin: 0; font-size: clamp(.8rem,1vw,1.2rem); line-height: 1.8; word-break: keep-all; }
+@media (max-width: 767px) {
+ .has-horizontal-about .about-grid-heading { padding-top: 7rem; }
+ .about-image-rail, .about-image-rail .about-grid-blocks { gap: 3vw; }
+ .about-image-rail i { width: min(70vw,38svh); }
+ .about-scroll-copy p { font-size: .85rem; }
+}
+@media (max-height: 650px) and (min-width: 768px) {
+ .has-horizontal-about .about-grid-heading { padding-top: 6rem; margin-bottom: .75rem; }
+ .about-image-rail i { width: min(calc((100vw - var(--page-padding) * 2 - 3vw) / 4),30svh); }
+ .about-scroll-copies { margin-top: .75rem; }
+ .about-scroll-copy h3 { font-size: 1.75rem; }
 }
 
 /* Clone coding: layered scroll motion and pointer feedback. */

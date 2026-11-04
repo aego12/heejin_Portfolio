@@ -640,6 +640,33 @@ const aboutGridCurtain = aboutGrid?.querySelector('.about-grid-curtain')
 const aboutGridFlow = aboutGrid?.querySelector('.about-grid-flow')
 if (aboutGrid && aboutGridStage && aboutGridCurtain && aboutGridFlow) {
  const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+ const rows = [...aboutGridFlow.querySelectorAll('.about-grid-row')]
+ const groups = rows.map(row => row.querySelector('.about-grid-blocks'))
+ const rail = document.createElement('div')
+ rail.className = 'about-image-rail'
+ const copies = document.createElement('div')
+ copies.className = 'about-scroll-copies'
+ const textGroups = rows.map(row => {
+  const copy = document.createElement('div')
+  copy.className = 'about-scroll-copy'
+  copy.append(row.querySelector('h3'), row.querySelector('p'))
+  copy.querySelectorAll('h3, p').forEach(element => {
+   const original = element.textContent
+   element.classList.add('story-fill')
+   element.setAttribute('aria-label', original)
+   element.replaceChildren(...[...segmenter.segment(original)].map(({ segment }) => {
+    const character = document.createElement('span')
+    character.className = 'fill-char'
+    character.setAttribute('aria-hidden', 'true')
+    character.textContent = segment
+    return character
+   }))
+   element._fillCharacters = [...element.children]
+   element._filledCharacterCount = 0
+  })
+  return copy
+ })
+ groups.forEach(group => group.querySelectorAll('i[aria-hidden="true"]').forEach(block => block.remove()))
  let scheduled = false
  const drawAboutGrid = () => {
   scheduled = false
@@ -647,25 +674,65 @@ if (aboutGrid && aboutGridStage && aboutGridCurtain && aboutGridFlow) {
    aboutGridFlow.style.transform = ''
    return
   }
-  const progress = Math.max(0, Math.min(1, -aboutGrid.getBoundingClientRect().top / (aboutGrid.offsetHeight - innerHeight)))
-  const opening = Math.min(1, progress / .24)
+  const distance = Math.max(0, rail.scrollWidth - aboutGridFlow.clientWidth, groups.at(-1).offsetLeft)
+  const entranceDistance = innerHeight * .65
+  const total = entranceDistance + distance + innerHeight * .35
+  aboutGrid.style.height = `${innerHeight + total}px`
+  const scroll = clamp(-aboutGrid.getBoundingClientRect().top, 0, total)
+  const opening = clamp(scroll / entranceDistance)
   const ease = opening * opening * (3 - 2 * opening)
   aboutGridCurtain.style.transform = `rotate(${ease * 145}deg) scale(${1 - ease})`
   aboutGridCurtain.style.visibility = opening === 1 ? 'hidden' : 'visible'
-  const travel = Math.max(0, Math.min(1, (progress - .20) / .80))
-  aboutGridFlow.style.transform = `translateY(${-travel * aboutGridFlow.offsetHeight}px)`
-  aboutGridFlow.querySelectorAll('.about-grid-blocks i').forEach((block, index) => {
-   const column = index % 4
-   const row = Math.floor(index / 4)
-   const entrance = Math.max(0, 1 - Math.max(0, (travel - row * .14) * 7))
-   block.style.setProperty('--block-offset', `${entrance * [0, -140, 40, -70][column]}px`)
+  const x = clamp(scroll - entranceDistance, 0, distance)
+  rail.style.transform = `translate3d(${-x}px,0,0)`
+  let active = 0
+  groups.forEach((group, index) => { if (x >= group.offsetLeft - 1) active = index })
+  textGroups.forEach((copy, index) => {
+   copy.classList.toggle('is-active', index === active)
+   copy.setAttribute('aria-hidden', String(index !== active))
+   const start = index === 0 ? entranceDistance * .7 : entranceDistance + groups[index].offsetLeft
+   const progress = clamp((scroll - start) / Math.max(1, Math.min(innerHeight * .3, groups[index].offsetWidth * .25)))
+   copy.querySelectorAll('.story-fill').forEach(element => setFillProgress(element, progress))
   })
  }
  const queueAboutGrid = () => { if (!scheduled) { scheduled = true; requestAnimationFrame(drawAboutGrid) } }
+ const configureAbout = () => {
+  aboutGrid.classList.toggle('has-horizontal-about', !motion.matches)
+  if (!motion.matches) {
+   groups.forEach((group, index) => {
+    rail.append(group)
+    const copy = textGroups[index]
+    if (!copy.children.length) copy.append(rows[index].querySelector('h3'), rows[index].querySelector('p'))
+    copies.append(copy)
+   })
+   aboutGridFlow.append(rail, copies)
+  } else {
+   groups.forEach((group, index) => {
+    rows[index].append(group, ...textGroups[index].children)
+    rows[index].querySelectorAll('.story-fill').forEach(element => setFillProgress(element, 1))
+   })
+   rail.remove()
+   copies.remove()
+   aboutGrid.style.height = ''
+  }
+  queueAboutGrid()
+ }
+ // Land on the visible ABOUT heading after the curtain has opened.
+ const navigateToAbout = (event) => {
+  event.preventDefault()
+  const sectionTop = scrollY + aboutGrid.getBoundingClientRect().top
+  const offset = motion.matches ? 0 : innerHeight * .65
+  if (location.hash !== '#about') history.pushState(null, '', '#about')
+  window.scrollTo({ top: sectionTop + offset, behavior: motion.matches ? 'instant' : 'smooth' })
+ }
+ document.querySelectorAll('.primary-nav a[href="#about"]').forEach((link) => {
+  link.addEventListener('click', navigateToAbout)
+ })
  addEventListener('scroll', queueAboutGrid, { passive: true })
  addEventListener('resize', queueAboutGrid)
- motion.addEventListener('change', queueAboutGrid)
- drawAboutGrid()
+ motion.addEventListener('change', configureAbout)
+ document.fonts.ready.then(queueAboutGrid)
+ configureAbout()
 }
 
 const cloneCanvas = document.querySelector('.clone-canvas')
