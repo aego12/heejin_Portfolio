@@ -1110,7 +1110,7 @@ body.show-grid .column-overlay { opacity: 1; }
 .has-horizontal-about .about-grid-flow { top: 0; padding: 0; }
 .has-horizontal-about .about-grid-heading { padding-top: 7.5rem; margin-bottom: clamp(1rem,3svh,2rem); }
 .has-horizontal-about .about-grid-heading h2,
-.has-horizontal-about .about-grid-heading span { font-size: clamp(1.5rem,3vw,3rem); }
+.has-horizontal-about .about-grid-heading span { font-size: var(--type-section-title); }
 .has-horizontal-about .about-grid-row,
 .has-horizontal-about .about-grid-credit { display: none; }
 .about-image-rail { position: relative; display: flex; gap: 1vw; width: max-content; will-change: transform; }
@@ -1122,6 +1122,9 @@ body.show-grid .column-overlay { opacity: 1; }
 .about-scroll-copy h3 { margin: 0 0 .75rem; font-size: clamp(1.5rem,3.5vw,4rem); font-weight: 400; line-height: 1.25; letter-spacing: -.045em; word-break: keep-all; }
 .about-scroll-copy p { max-width: 52rem; margin: 0; font-size: clamp(.8rem,1vw,1.2rem); line-height: 1.8; word-break: keep-all; }
 @media (max-width: 767px) {
+ .about-grid-heading h2, .about-grid-heading span,
+ .has-horizontal-about .about-grid-heading h2,
+ .has-horizontal-about .about-grid-heading span { font-size: clamp(2.2rem,11vw,3.5rem); }
  .has-horizontal-about .about-grid-heading { padding-top: 7rem; }
  .about-image-rail, .about-image-rail .about-grid-blocks { gap: 3vw; }
  .about-image-rail i { width: min(70vw,38svh); }
