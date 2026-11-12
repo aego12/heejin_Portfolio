@@ -112,10 +112,15 @@ body.show-grid .column-overlay { opacity: 1; }
 .capability-list { grid-column: 1 / 13; grid-row: 2; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
 .capability-list article { min-width: 0; height: min(52svh, 32rem); display: flex; flex-direction: column; justify-content: space-between; padding: var(--space-4); border: 1px solid var(--bg); }
 .capability-object { width: min(52%, 13rem); aspect-ratio: 1; align-self: center; margin-block: auto; background: var(--bg); }
-.capability-card-label { display: flex; justify-content: space-between; align-items: end; gap: var(--space-2); }
+.capability-object { position: relative; top: clamp(1rem, 3svh, 2rem); flex-shrink: 0; overflow: visible; }
+.capability-icon { position: absolute; display: block; width: 116%; height: 116%; max-width: none; left: -8%; top: -8%; object-fit: contain; pointer-events: none; mix-blend-mode: difference; }
+.capability-icon-communication { width: 84%; height: 84%; left: 8%; top: 8%; }
+.capability-icon-composure { width: 96%; height: 96%; left: 2%; top: 2%; transform: rotate(35deg); }
+.capability-icon-sensibility { width: 120%; left: -10%; }
+.capability-card-label { order: -1; display: flex; justify-content: space-between; align-items: end; gap: var(--space-2); }
 .capability-list span { flex: 0 0 auto; font-size: var(--type-meta); color: #b5b5b5; }
 .capability-list h3 { display: flex; align-items: baseline; flex-wrap: wrap; gap: .35rem .6rem; margin: var(--space-6) 0 0; font-size: var(--type-card-title); font-weight: 400; letter-spacing: -.035em; }
-.capability-list p { margin: var(--space-2) 0 0; color: #b5b5b5; font-size: var(--type-body); line-height: 1.6; }
+.capability-list p { order: 1; margin: var(--space-2) 0 0; color: #b5b5b5; font-size: var(--type-body); line-height: 1.6; }
 .capability-list .capability-meaning { color: var(--bg); font-size: .75rem; font-weight: 400; letter-spacing: normal; line-height: 1.4; white-space: nowrap; }
 
 .section-divider { padding-block: var(--section-divider-space); }
@@ -612,7 +617,7 @@ body.show-grid .column-overlay { opacity: 1; }
   :root { --section-divider-space: var(--space-16); }
   .capability-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
   .capability-list article { height: auto; min-height: 15rem; padding: var(--space-3); }
-  .capability-object { width: min(58%, 7rem); }
+  .capability-object { width: min(58%, 7rem); top: .5rem; margin-block: 2rem; }
   .capability-list h3 { min-width: 0; margin-top: var(--space-4); font-size: .7rem; overflow-wrap: anywhere; }
   .capability-card-label { align-items: flex-start; }
   .capability-list span { font-size: .65rem; }
