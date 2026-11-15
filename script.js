@@ -137,9 +137,13 @@ if (personalDetails.length) {
  rail.className = 'project-media-rail planning-rail'
  personalDetails.forEach((panel, index) => {
   const copy = panel.querySelector('.personal-detail-copy')
+  copy.dataset.project = panel.classList.contains('personal-detail-kodak')
+   ? 'kodak'
+   : panel.classList.contains('personal-detail-juvelook') ? 'juvelook' : 'hugreen'
   copy.dataset.planningStep = String(index)
   copy.hidden = index !== 0
   copy.prepend(panel.querySelector('.personal-panel-label'))
+  copy.querySelector('h2')?.classList.add('story-fill')
   copies.append(copy)
   const group = document.createElement('div')
   group.className = 'planning-image-group'
@@ -247,6 +251,15 @@ fillElements.forEach((element) => {
 
 const setStoryFill = (panels, phase) => {
   panels.forEach((panel, index) => {
+    if (panel.matches('.personal-combined') && (window.innerWidth < 1200 || reduceMotion.matches)) {
+      const groups = [...panel.querySelectorAll('.planning-image-group')]
+      panel.querySelectorAll('.personal-detail-copy').forEach((copy, step) => {
+        const top = groups[step].getBoundingClientRect().top
+        const fillProgress = reduceMotion.matches ? 1 : clamp((window.innerHeight * .4 - top) / (window.innerHeight * .35))
+        copy.querySelectorAll('.story-fill').forEach(element => setFillProgress(element, fillProgress))
+      })
+      return
+    }
     if (panel.matches('.planning-combined:not(.personal-combined):not(.video-combined)')) {
       let imageNumber = 1
       panel.querySelectorAll('.project-media-box').forEach((box, imageIndex) => {
@@ -356,6 +369,107 @@ stories.forEach(({ panels }) => {
   content.append(copy, rail)
   panel.classList.add('project-media-scroll')
  })
+})
+
+// Captions live outside the media frame, in Korean / English reading order.
+const mediaCaptions = {
+ 'nintendo-brand-experience-01.png': ['히어로', 'Hero'],
+ 'nintendo-brand-experience-02-cropped.png': ['게임 IP 연결 페이지', 'Game IP Links Page'],
+ 'editorial-whats-new.png': ['새로운 소식 페이지', "What's New Page"],
+ 'editorial-nintendo-picks.png': ['닌텐도 추천 페이지', 'Nintendo Picks Page'],
+ 'ip-play-game-discovery.png': ['캐릭터별 게임 탐색', 'Game Discovery by Character'],
+ 'nintendo-before.png': ['리뉴얼 전', 'Before Renewal'],
+ 'nintendo-after-renewal.png': ['리뉴얼 후', 'After Renewal'],
+ 'image 561.png': ['40주년 메인 페이지 디자인', '40th Anniversary Main Page Design'],
+ 'what-i-do-character.png': ['캐릭터 서브페이지 디자인', 'Character Subpage Design'],
+ 'image 562.png': ['프로젝트 발표', 'Project Presentation'],
+ 'together-portrait.jpg': ['프로젝트 화면 검토', 'Project Review'],
+ 'together-working.jpg': ['팀 공동 코드 검토', 'Team Code Review'],
+ 'together-team-meeting.jpg': ['프로젝트 팀 회의', 'Project Team Meeting'],
+ 'ux-brand-research.png': ['자사·브랜드 조사', 'Company & Brand Research'],
+ 'ux-user-interviews.png': ['사용자 인터뷰와 분석', 'User Interviews & Analysis'],
+ 'ux-user-journey-map.png': ['사용자 여정 지도', 'User Journey Map'],
+ 'ux-team-structure.png': ['메뉴 구조 및 정보 구조도', 'Menu Structure & Information Architecture'],
+ 'ux-team-workflow.png': ['팀 작업 프로세스와 우선순위', 'Team Workflow & Priorities'],
+ 'ux-design-direction.png': ['디자인 방향과 레퍼런스', 'Design Direction & References'],
+ 'ux-screen-design.png': ['화면 설계 와이어프레임', 'Screen Wireframes'],
+ 'kodak-apparel-scroll-v2.mp4': ['코닥 어패럴 전체 페이지', 'KODAK Apparel Full Page'],
+ 'kodak-this-month.png': ['이달의 코닥 상품 소개', 'KODAK Monthly Selection'],
+ 'kodak-weekly-best.png': ['주간 인기 상품', 'Weekly Best Sellers'],
+ 'juvelook-scroll.mp4': ['쥬베룩 전체 페이지', 'JUVELOOK Full Page'],
+ 'juvelook-product-design.png': ['쥬베룩 볼륨 제품과 콜라겐 기술 소개', 'JUVELOOK Volume & Collagen Technology'],
+ 'juvelook-about-design.png': ['쥬베룩 브랜드 소개와 글로벌 성과', 'JUVELOOK Brand & Global Presence'],
+ 'hugreen-scroll.mp4': ['휴그린 전체 페이지', 'HUGREEN Full Page'],
+ 'hugreen-window-message.png': ['휴그린 브랜드 메시지', 'HUGREEN Brand Message'],
+ 'hugreen-content-design.png': ['창호 상담 안내와 제품 혜택', 'Window Consultation & Product Benefits'],
+ 'hugreen-short-form.mp4': ['휴그린 숏폼 영상', 'HUGREEN Short-form Video'],
+ 'kodak-hero.mp4': ['코닥 어패럴 메인 영상', 'KODAK Apparel Hero Video'],
+ 'juvelook-hero.mp4': ['쥬베룩 메인 영상', 'JUVELOOK Hero Video'],
+}
+const createMediaCaption = (labels) => {
+ const caption = document.createElement('figcaption')
+ caption.className = 'project-media-caption'
+ labels.forEach((label, index) => {
+  const text = document.createElement('span')
+  text.lang = index === 0 ? 'ko' : 'en'
+  text.textContent = label
+  caption.append(text)
+ })
+ return caption
+}
+document.querySelectorAll('.project-media-box').forEach(box => {
+ if (box.querySelector('.story-role-navigation')) return
+ const assets = [...box.querySelectorAll('img, video')]
+ assets.forEach(asset => {
+  const source = asset.getAttribute('src') ?? asset.querySelector('source')?.getAttribute('src') ?? ''
+  const filename = decodeURIComponent(source.split('/').pop())
+  // Vite adds a content hash to asset names in production builds.
+  const originalName = Object.keys(mediaCaptions).find(name => {
+   const dot = name.lastIndexOf('.')
+   return filename.startsWith(`${name.slice(0, dot)}-`) && filename.endsWith(name.slice(dot))
+  })
+  const labels = mediaCaptions[filename] ?? mediaCaptions[originalName]
+  if (filename === 'nintendo-brand-experience-01.png' || originalName === 'nintendo-brand-experience-01.png') {
+   asset.classList.add('nintendo-brand-cropped')
+  }
+  if (!labels) return
+  const caption = createMediaCaption(labels)
+  if (box.classList.contains('project-comparison-box')) {
+   asset.closest('figure').querySelector('figcaption').replaceWith(caption)
+  } else {
+   const figure = document.createElement('figure')
+   figure.className = 'project-media-item'
+   box.before(figure)
+   figure.append(caption, box)
+  }
+ })
+})
+
+document.querySelectorAll('.project-media-box > img').forEach(image => {
+ if (!image.getAttribute('src')?.includes('editorial-whats-new')) return
+ const preview = document.createElement('div')
+ preview.className = 'nintendo-news-preview'
+ const iframe = document.createElement('iframe')
+ iframe.src = '/previews/nintendo-news.html'
+ iframe.title = 'Nintendo 새로운 소식 웹 인터랙션 자동 미리보기'
+ iframe.loading = 'lazy'
+ iframe.tabIndex = -1
+ const link = document.createElement('a')
+ link.className = 'nintendo-news-original'
+ link.href = 'https://mbc-teamproject-red.vercel.app/'
+ link.target = '_blank'
+ link.rel = 'noopener noreferrer'
+ link.textContent = '원본 웹에서 직접 보기 ↗'
+ preview.append(iframe)
+ window.addEventListener('message', event => {
+  if (event.origin === location.origin && event.source === iframe.contentWindow && event.data === 'nintendo-news-ready') {
+   preview.classList.add('is-ready')
+  }
+ })
+ image.replaceWith(preview, link)
+ new ResizeObserver(entries => {
+  iframe.style.transform = `scale(${entries[0].contentRect.width / 1920})`
+ }).observe(preview)
 })
 
 const getMediaTravel = (rail) => {
@@ -470,6 +584,7 @@ const renderScroll = () => {
         ? clamp(-selfIntroduction.getBoundingClientRect().top / Math.max(1, selfIntroduction.offsetHeight - window.innerHeight))
         : clamp((fillStart - titleRect.top) / (fillStart - fillEnd))
     setFillProgress(selfIntroductionTitle, fillProgress)
+    selfIntroduction.style.setProperty('--profile-flower-rotation', `${reduceMotion.matches ? 0 : fillProgress * 540}deg`)
   }
   if (skillScroll && skillPin && skillArtwork && skillFrame) {
     const travel = Number(skillScroll.dataset.travel ?? 0)
@@ -499,12 +614,29 @@ const openingObject = openingTitle?.querySelector('.hero-object')
 const openingText = openingTitle?.querySelector('.hero-title-text')
 const openingInverse = openingTitle?.querySelector('.hero-title-inverse')
 const openingMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+const openingCopy = opening?.querySelector('.hero-copy')
+const openingCopySteps = [...(openingCopy?.querySelectorAll('.hero-copy-step') ?? [])]
+const renderOpeningCopy = (progress) => {
+ const staticCopy = openingMotion.matches
+ openingCopy?.classList.toggle('has-copy-motion', !staticCopy)
+ const phase = clamp(progress / .78) * openingCopySteps.length
+ const activeIndex = Math.min(openingCopySteps.length - 1, Math.floor(phase))
+ openingCopySteps.forEach((step, index) => {
+  const active = staticCopy || index === activeIndex
+  step.classList.toggle('is-active', active)
+  step.setAttribute('aria-hidden', String(!active))
+  const lines = [...step.querySelectorAll('.story-fill')]
+  const fill = staticCopy ? 1 : clamp((phase - index) / .8)
+  lines.forEach((line, lineIndex) => setFillProgress(line, staticCopy ? 1 : clamp(fill * lines.length - lineIndex)))
+ })
+}
 let openingFrame = 0
 const renderOpening = () => {
  openingFrame = 0
  if (!opening || !openingTitle || !openingObject) return
  const letters = [...openingTitle.querySelectorAll('i')]
  if (openingMotion.matches) {
+  renderOpeningCopy(1)
   openingTitle.style.transform = ''
   openingObject.style.transform = ''
   if (openingInverse) openingInverse.style.clipPath = 'polygon(0 0, 0 0, 0 0, 0 0)'
@@ -512,6 +644,7 @@ const renderOpening = () => {
   return
  }
  const p = Math.max(0, Math.min(1, -opening.getBoundingClientRect().top / Math.max(1, opening.offsetHeight - innerHeight)))
+ renderOpeningCopy(p)
  const travel = Math.max(0, openingTitle.scrollWidth - opening.clientWidth * .9)
  const horizontalProgress = Math.min(1, p / .75)
  const rotationProgress = Math.min(1, p / .75)
@@ -580,6 +713,7 @@ if (capabilitiesSection && capabilitiesInner && capabilitiesCards.length) {
     card.querySelector('.capability-object').style.position = ''
     card.querySelector('.capability-object').style.top = ''
     card.querySelector('.capability-object').style.transform = ''
+    card.querySelector('.capability-icon').style.opacity = ''
    })
    if (heading) heading.style.opacity = ''
    return
@@ -613,6 +747,7 @@ if (capabilitiesSection && capabilitiesInner && capabilitiesCards.length) {
    })
    const shift = listRect.left + listRect.width / 2 - cardRect.left - cardRect.width / 2
    card.style.transform = 'translateX(' + (shift * merge) + 'px)'
+   card.querySelector('.capability-icon').style.opacity = String(1 - merge * merge * (3 - 2 * merge))
    card.style.zIndex = String(capabilitiesCards.length - index)
    card.style.opacity = String(1 - reveal)
    const spin = clamp((p - .35 - index * .036) / .3)

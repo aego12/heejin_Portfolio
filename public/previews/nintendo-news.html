@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nintendo 새로운 소식 인터랙션</title>
+  <link rel="stylesheet" href="https://mbc-teamproject-red.vercel.app/assets/vendor-fOJvfYOR.css">
+  <link rel="stylesheet" href="https://mbc-teamproject-red.vercel.app/assets/index-C1raRUQM.css">
+  <style>html { scrollbar-width: none; } body { margin: 0; } ::-webkit-scrollbar { display: none; } .common-header { display: none !important; }</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module">
+    history.replaceState(null, '', '/');
+    await import('/previews/nintendo-original.js');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let start;
+    let ready = false;
+    const animate = time => {
+      const news = document.querySelector('.home-news');
+      if (news && time > 4000) {
+        start ??= time;
+        const top = news.getBoundingClientRect().top + scrollY;
+        const travel = Math.max(0, news.offsetHeight - innerHeight);
+        const progress = reduced ? .3 : (1 - Math.cos((time - start) / 18000 * Math.PI * 2)) / 2;
+        window.scrollTo({ top: top + travel * progress, behavior: 'instant' });
+        if (!ready && [...news.querySelectorAll('img')].some(image => image.naturalWidth > 0)) {
+          ready = true;
+          parent.postMessage('nintendo-news-ready', location.origin);
+        }
+      }
+      requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
